@@ -5,6 +5,7 @@ class Settings:
 
     def __init__(self):
         self.ship_speed = 1
+        self.ship_limit = 3
 
         self.bullets_limit = 3
         self.bullet_speed = 1

@@ -5,6 +5,8 @@ from settings import Settings
 from cube import Cube
 from ship import Ship
 from bullet import Bullet
+from gamestats import Gamestats
+
 
 
 class Shooting:
@@ -12,6 +14,7 @@ class Shooting:
     def __init__(self):
         pygame.init()
         self.settings = Settings()
+        self.stats = Gamestats(self)
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.ship = Ship(self)
         self.cube = Cube(self)
@@ -22,11 +25,13 @@ class Shooting:
 
     def run_game(self):
         while True:
+
             self._check_events()
-            self._update_bullets()
+            if self.stats.game_active:
+                self._update_bullets()
+                self.ship.update_ship()
+                self._update_cube()
             self._update_screen()
-            self.ship.update_ship()
-            self._update_cube()
 
 
 
@@ -66,14 +71,17 @@ class Shooting:
         """Обновляет позицию снаряда и удаляет его при уходе за экран"""
         # Обновление позиции снаряда .
         self.bullets.update()
+        self._check_miss()
+        self._chek_bullet_cube_collisions()
 
-
-        # Удаление снаряда, вышедшего за край экрана.
+    def _check_miss(self):
         for bullet in self.bullets.copy():
             if bullet.rect.left >= self.screen.get_rect().right:
-                self.bullets.remove(bullet)
-
-        self._chek_bullet_cube_collisions()
+                if self.stats.ships_left:
+                    self.bullets.remove(bullet)
+                    self.stats.ships_left -= 1
+                else:
+                    self.stats.game_active = False
 
     def _update_cube(self):
         self.cube.cub_update()

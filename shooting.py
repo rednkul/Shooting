@@ -6,6 +6,7 @@ from cube import Cube
 from ship import Ship
 from bullet import Bullet
 from gamestats import Gamestats
+from button import Button
 
 
 
@@ -19,6 +20,7 @@ class Shooting:
         self.ship = Ship(self)
         self.cube = Cube(self)
         self.bullets = pygame.sprite.Group()
+        self.playbutton = Button(self, 'Play')
 
         pygame.display.set_caption("Shooting trainer")
 
@@ -60,6 +62,10 @@ class Shooting:
             self.ship.moving_up = False
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = False
+
+    def _check_playbutton(self, mouse_pos):
+        button_cliked =
+
 
     def _fire_bullet(self):
         """Создание нового снаряда и включение его в группу bullets."""

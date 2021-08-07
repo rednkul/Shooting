@@ -45,6 +45,9 @@ class Shooting:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_playbutton(mouse_pos)
 
     def _check_keydown_events(self,event):
         if event.key == pygame.K_UP:
@@ -55,6 +58,8 @@ class Shooting:
             self._fire_bullet()
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_p:
+            self.start_game()
 
 
     def _check_keyup_events(self,event):
@@ -64,7 +69,26 @@ class Shooting:
             self.ship.moving_down = False
 
     def _check_playbutton(self, mouse_pos):
-        button_cliked =
+        button_cliked = self.playbutton.rect.collidepoint(mouse_pos)
+        if button_cliked:
+            self.start_game()
+
+    def start_game(self):
+        """Запускает игру"""
+        if not self.stats.game_active:
+            # Сброс игровой статистики
+            self.stats.reset_stats()
+            self.stats.game_active = True
+
+            # Очистка списков пришельцев и снарядов
+            self.bullets.empty()
+
+            # Размещение корабля и куба в центре
+            self.ship.center_ship()
+            self.cube.center_cube()
+
+        # Сокрытие указателя мыши
+        pygame.mouse.set_visible(False)
 
 
     def _fire_bullet(self):
@@ -111,6 +135,10 @@ class Shooting:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.cube.draw_cube()
+
+        # Кнопка Play отображается только если игра не активна
+        if not self.stats.game_active:
+            self.playbutton.draw_button()
 
 
         pygame.display.flip()

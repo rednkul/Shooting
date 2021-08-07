@@ -10,12 +10,12 @@ class Settings:
         self.bullets_limit = 3
         self.bullet_speed = 1
 
-        self.bullet_width = 50
-        self.bullet_height = 200
-        self.bullet_color = (130, 130, 130)
+        self.bullet_width = 20
+        self.bullet_height = 5
+        self.bullet_color = (250, 130, 130)
 
         self.cub_color = (255, 0, 0)
-        self.cub_speed = 0
+        self.cub_speed = 1
         self.cub_width = 40
         self.cub_height = 40
         self.direction = randrange(-1, 2, 2)

@@ -25,5 +25,9 @@ class Cube(Sprite):
         self.y += self.settings.cub_speed * self.settings.direction
         self.rect.y = self.y
 
+    def center_cube(self):
+        self.rect.midright = self.screen_rect.midright
+        self.y = float(self.rect.y)
+
 
 

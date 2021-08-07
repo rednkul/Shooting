@@ -67,10 +67,13 @@ class Shooting:
         # Обновление позиции снаряда .
         self.bullets.update()
 
+
         # Удаление снаряда, вышедшего за край экрана.
         for bullet in self.bullets.copy():
             if bullet.rect.left >= self.screen.get_rect().right:
                 self.bullets.remove(bullet)
+
+        self._chek_bullet_cube_collisions()
 
     def _update_cube(self):
         self.cube.cub_update()
@@ -83,6 +86,9 @@ class Shooting:
 
     def _change_direction(self):
         self.settings.direction *= -1
+
+    def _chek_bullet_cube_collisions(self):
+        collision = pygame.sprite.spritecollide(self.cube, self.bullets, True)
 
     def _update_screen(self):
 

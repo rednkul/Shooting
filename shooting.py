@@ -12,7 +12,7 @@ class Shooting:
     def __init__(self):
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((1000,1000))
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.ship = Ship(self)
         self.cube = Cube(self)
         self.bullets = pygame.sprite.Group()

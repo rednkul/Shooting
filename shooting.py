@@ -90,6 +90,8 @@ class Shooting:
         # Сокрытие указателя мыши
         pygame.mouse.set_visible(False)
 
+        self.settings.initialize_dynamic_settings()
+
 
     def _fire_bullet(self):
         """Создание нового снаряда и включение его в группу bullets."""
@@ -127,6 +129,8 @@ class Shooting:
 
     def _chek_bullet_cube_collisions(self):
         collision = pygame.sprite.spritecollide(self.cube, self.bullets, True)
+        if collision:
+            self.settings.increase_speed()
 
     def _update_screen(self):
 

@@ -63,6 +63,7 @@ class Shooting:
             sys.exit()
         elif event.key == pygame.K_p:
             self.start_game()
+            self.settings.initialize_dynamic_settings()
 
 
     def _check_keyup_events(self,event):

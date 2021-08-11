@@ -6,4 +6,5 @@ class Gamestats:
         self.game_active = False
 
     def reset_stats(self):
+        """Сброс статистики игры"""
         self.ships_left = self.settings.ship_limit

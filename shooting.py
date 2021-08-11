@@ -26,6 +26,7 @@ class Shooting:
 
 
     def run_game(self):
+        """Иниуциализация циккла игры"""
         while True:
 
             self._check_events()
@@ -38,6 +39,7 @@ class Shooting:
 
 
     def _check_events(self):
+        """Обработка событий"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -50,6 +52,7 @@ class Shooting:
                 self._check_playbutton(mouse_pos)
 
     def _check_keydown_events(self,event):
+        """Обработка нажатия клавиш"""
         if event.key == pygame.K_UP:
             self.ship.moving_up = True
         elif event.key == pygame.K_DOWN:
@@ -63,12 +66,14 @@ class Shooting:
 
 
     def _check_keyup_events(self,event):
+        """Обработка отжатия клавиш"""
         if event.key == pygame.K_UP:
             self.ship.moving_up = False
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = False
 
     def _check_playbutton(self, mouse_pos):
+        """Проверка нажатия кнопки Play"""
         button_cliked = self.playbutton.rect.collidepoint(mouse_pos)
         if button_cliked:
             self.start_game()
@@ -107,6 +112,7 @@ class Shooting:
         self._chek_bullet_cube_collisions()
 
     def _check_miss(self):
+        """Проверяет, был ли промах и не кончились ли жизни"""
         for bullet in self.bullets.copy():
             if bullet.rect.left >= self.screen.get_rect().right:
                 if self.stats.ships_left:
@@ -116,28 +122,36 @@ class Shooting:
                     self.stats.game_active = False
 
     def _update_cube(self):
+        """Обновление позиции куба"""
         self.cube.cub_update()
         self._check_cub_edges()
 
     def _check_cub_edges(self):
+        """Проверка достижения кубом края экрана"""
         if self.cube.check_edges():
             self._change_direction()
 
 
     def _change_direction(self):
+        """Смена направления куба"""
         self.settings.direction *= -1
 
     def _chek_bullet_cube_collisions(self):
+        """Проверка столкновения куба и пули"""
         collision = pygame.sprite.spritecollide(self.cube, self.bullets, True)
         if collision:
             self.settings.increase_speed()
 
     def _update_screen(self):
-
+        """Обновление экрана"""
+        # Отрисовка фона
         self.screen.fill((0, 0, 0))
+        # Отрисовка корабля
         self.ship.blitme()
+        # Отрисовка снарядов
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        # Отрисовка мишени
         self.cube.draw_cube()
 
         # Кнопка Play отображается только если игра не активна
